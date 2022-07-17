@@ -3,6 +3,7 @@ Game/SFML/C++
 
 Required libraries:
 SFML
+(sudo apt-get install libsfml-dev)
 
 To compile (on linux) type in terminal:
 g++ main.cpp Player.cpp Burger.cpp Enemy.cpp Settings.cpp Coin.cpp Text.cpp  -lsfml-graphics -lsfml-window -lsfml-system
