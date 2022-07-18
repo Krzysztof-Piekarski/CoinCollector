@@ -1,13 +1,12 @@
 #include <SFML/Graphics.hpp>
 #include "Settings.h"
-#include "Player.h"
-#include "Burger.h"
-#include "Enemy.h"
-#include "Coin.h"
-#include "Text.h"
+#include "Game.h"
 
 float bestTime = 9999;
-bool gameOver = false;
+void newRound(Settings& t_set, sf::RenderWindow& t_window, sf::Event& t_event, float& t_bestTime)
+{
+    Game game(t_set, t_window, t_event, t_bestTime);
+}
 
 int main()
 {
@@ -16,62 +15,9 @@ int main()
     sf::Event event;
     window.setFramerateLimit(60);
 
-    while(!gameOver)
+    while(window.isOpen())
     {
-        Burger burger(set);
-        Player player(set, burger);
-        Enemy enemy(player);
-        Text text(set);
-        std::vector<Coin*> coins; 
-
-        for (int i = 0; i < 8; ++i)
-        {
-        coins.push_back(new Coin(set, player));
-        }
-
-        while (!(set.score >= set.goal))
-        {
-            window.clear(sf::Color(255, 255, 255, 255));
-            window.pollEvent(event);
-
-            if (event.type == sf::Event::Closed)
-            {
-                window.close();
-                gameOver = true;
-                break;
-            }
-
-            player.update();
-            text.update();
-            if (bestTime < 9998) text.string += "\nBest time: " + std::to_string(bestTime);
-            text.text.setString(text.string);
-            enemy.update();
-            burger.update();
-            for (auto& c : coins)
-            {
-                c->update();
-                window.draw(c->sprite);
-            }
-            window.draw(burger.sprite);
-            window.draw(player.sprite);
-            window.draw(enemy.sprite);
-            window.draw(text.text);
-
-            window.display();
-        }
-        set.currentTime = text.textClock.getElapsedTime().asSeconds();
-        if (set.currentTime < bestTime)
-            bestTime = set.currentTime;
-        set.score = 0;
-        window.clear(sf::Color(255, 255, 255, 255));
-        text.displayTime();
-        window.draw(text.text);
-        window.display();
-        while (1)
-        {
-            if (text.textClock.getElapsedTime().asSeconds() > 2)
-            break;
-        }
+        newRound(set, window, event, bestTime);
     }
     return 0;
 }
