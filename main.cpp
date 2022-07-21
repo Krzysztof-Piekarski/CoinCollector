@@ -2,7 +2,6 @@
 #include "Settings.h"
 #include "Game.h"
 
-float bestTime = 9999;
 void newRound(Settings& t_set, sf::RenderWindow& t_window, sf::Event& t_event, float& t_bestTime)
 {
     Game game(t_set, t_window, t_event, t_bestTime);
@@ -14,6 +13,8 @@ int main()
     sf::RenderWindow window{ sf::VideoMode(set.width(), set.height()), "Coin Collector" };
     sf::Event event;
     window.setFramerateLimit(60);
+    
+    float bestTime = 9999;
 
     while(window.isOpen())
     {
